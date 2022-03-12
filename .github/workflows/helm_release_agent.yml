@@ -1,7 +1,9 @@
-name: Release Charts
+name: Agent Release Charts
 
 on:
   push:
+    paths:
+      - 'charts/agent/**'
     branches:
       - main
 jobs:
@@ -16,8 +18,12 @@ jobs:
       - name: Configure Git
         run: |
           git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@jencydare85@gmail.com"
+          git config user.email "$GITHUB_ACTOR@@gmail.com"
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.1.0
+        with:
+          charts_dir: /charts/agent
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
